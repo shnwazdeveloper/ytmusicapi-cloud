@@ -1,6 +1,29 @@
 ytmusicapi: Unofficial API for YouTube Music
 ############################################
 
+Cloud API wrapper
+-----------------
+
+This copy adds a deployable FastAPI web service around ``ytmusicapi``.
+It serves a small homepage at ``/`` and read-only JSON endpoints under ``/api``.
+
+Useful URLs after starting the server:
+
+* ``/`` - web homepage
+* ``/docs`` - interactive OpenAPI documentation
+* ``/health`` - health check
+* ``/api/search?q=Oasis%20Wonderwall`` - search endpoint
+
+Run locally:
+
+.. code-block:: bash
+
+   pip install -r requirements.txt
+   uvicorn api.main:app --reload
+
+Deploy to Render with the included ``render.yaml`` Blueprint. More details are in
+``DEPLOYMENT.md``.
+
 .. |pypi-downloads| image:: https://img.shields.io/pypi/dm/ytmusicapi?style=flat-square
     :alt: PyPI Downloads
     :target: https://pypi.org/project/ytmusicapi/
