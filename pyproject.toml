@@ -29,6 +29,10 @@ readme = { file = ["README.rst"] }
 [tool.setuptools]
 include-package-data = false
 
+[tool.setuptools.packages.find]
+include = ["ytmusicapi*", "api*"]
+exclude = ["docs*", "site*", "tests*"]
+
 [tool.setuptools.package-data]
 "*" = ["**.rst", "**.py", "**.mo"]
 

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>YTMusicAPI Cloud</title>
+    <link rel="stylesheet" href="/assets/styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Read-only YouTube Music HTTP API</p>
+          <h1>YTMusicAPI Cloud</h1>
+          <p class="lede">
+            Search songs, inspect albums, load playlists, fetch charts, and explore public
+            YouTube Music data through a simple JSON API.
+          </p>
+          <div class="actions">
+            <a class="button primary" href="/docs">Open API docs</a>
+            <a class="button" href="/health">Health check</a>
+          </div>
+        </div>
+        <form class="search" id="search-form">
+          <label for="query">Try a search</label>
+          <div class="row">
+            <input id="query" name="q" value="Oasis Wonderwall" autocomplete="off">
+            <button type="submit">Run</button>
+          </div>
+          <pre id="result">Ready.</pre>
+        </form>
+      </section>
+
+      <section class="endpoints" aria-label="API endpoints">
+        <article>
+          <span>GET</span>
+          <code>/api/search?q=...</code>
+        </article>
+        <article>
+          <span>GET</span>
+          <code>/api/song/{video_id}</code>
+        </article>
+        <article>
+          <span>GET</span>
+          <code>/api/album/{browse_id}</code>
+        </article>
+        <article>
+          <span>GET</span>
+          <code>/api/playlist/{playlist_id}</code>
+        </article>
+      </section>
+    </main>
+
+    <script>
+      const form = document.querySelector("#search-form");
+      const output = document.querySelector("#result");
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const query = new FormData(form).get("q");
+        output.textContent = "Loading...";
+
+        try {
+          const response = await fetch(`/api/search?q=${encodeURIComponent(query)}&limit=5`);
+          const json = await response.json();
+          output.textContent = JSON.stringify(json, null, 2);
+        } catch (error) {
+          output.textContent = `Request failed: ${error.message}`;
+        }
+      });
+    </script>
+  </body>
+</html>
